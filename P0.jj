@@ -1,0 +1,62 @@
+PARSER_BEGIN(WHILE)
+
+public class WHILE {
+
+  /** Main entry point. **/
+  public static void main(String args[]) throws ParseException {
+    WHILE parser = new WHILE(System.in);
+    parser.Input();
+  }
+
+}
+
+PARSER_END(WHILE)
+
+SKIP :
+{
+    " "
+    | "\t"
+    | "\n"
+    | "\r"
+}
+
+TOKEN : {
+  < IN: "in" >
+  |
+  < OUT: "out" >
+  |
+  < KLAMMERAUF: "(" >
+  |
+  < SEMIKOLON: ";" >
+  |
+  < KLAMMERZU: ")" >
+  |
+  < DO: "do" >
+  |
+  < BEGIN: "begin" >
+  |
+  < END: "end" > 
+  |
+  < HILFSVARIABLE: "var" >
+  |
+  < WHILE: "while" >
+  |
+  < GLEICH: "=" >
+  |
+  < KOMMA: "," >
+  |
+  < NICHTGLEICH: "!=" >
+  |
+  < PLUS: "+" >
+  |
+  < NULL: "0" >
+  |
+  < EINS: "1" >
+  |
+  < VARIABLE: (["A"-"Z","a"-"z"]){1}(["A"-"Z","a"-"z","0"-"9"])* >
+}
+
+void Input() :
+{}
+{
+}

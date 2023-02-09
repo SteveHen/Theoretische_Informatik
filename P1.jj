@@ -1,0 +1,121 @@
+PARSER_BEGIN(WHILE)
+
+public class WHILE {
+
+  /** Main entry point. **/
+  public static void main(String args[]) throws ParseException {
+    try {
+      WHILE parser = new WHILE(System.in);
+      parser.Input();
+      System.err.println("Es handelt sich um ein WHILE0 Programm.");
+    } catch (ParseException e) {
+      e.printStackTrace();
+      System.err.println("\nEs handelt sich um kein WHILE0 Programm.");
+    }
+  }
+
+}
+
+PARSER_END(WHILE)
+
+SKIP :
+{
+      " "
+    | "\t"
+    | "\n"
+    | "\r"
+}
+
+TOKEN : {
+    < BEGIN: "begin" >
+  | < DO: "do" >
+  | < END: "end" >
+  | < IN: "in" >
+  | < OUT: "out" >
+  | < HILFSVARIABLE: "var" >
+  | < WHILE: "while" >
+  | < GLEICH: "=" >
+  | < KOMMA: "," >
+  | < KLAMMERAUF: "(" >
+  | < NICHTGLEICH: "!=" >
+  | < PLUS: "+" >
+  | < KLAMMERZU: ")" >
+  | < SEMIKOLON: ";" >
+  | < NULL: "0" >
+  | < EINS: "1" >
+  | < VARIABLE: (["A"-"Z","a"-"z"])(["A"-"Z","a"-"z","0"-"9"])* >
+}
+
+void programm():
+{}
+{
+  inout()
+  hilfsvariablen()
+  alpha()
+}
+
+void whileloop():
+{}
+{
+  <WHILE>
+  <VARIABLE>
+  <NICHTGLEICH>
+  <VARIABLE>
+  <DO>
+  <BEGIN>
+  alpha()
+  <END>
+}
+
+void zuweisung():
+{}
+{
+  <VARIABLE>
+  <GLEICH>
+  ( <NULL> | <VARIABLE><PLUS><EINS> )
+}  
+
+void inout():
+{}
+{
+  <VARIABLE>
+  <KLAMMERAUF>
+  <IN>
+  ( <VARIABLE> ( hvariable() )? )?
+  <SEMIKOLON>
+  <OUT>
+  <VARIABLE>
+  <KLAMMERZU>
+  <SEMIKOLON>
+}
+
+void hilfsvariablen():
+{}
+{
+  <HILFSVARIABLE>
+  <KLAMMERAUF>
+  ( <VARIABLE> ( hvariable() )? )?
+  <KLAMMERZU>
+  <SEMIKOLON>
+}
+
+void hvariable():
+{}
+{
+  <KOMMA>
+  <VARIABLE>
+  ( hvariable() )?
+}
+
+void alpha():
+{}
+{
+  ( zuweisung() | whileloop() )
+  ( <SEMIKOLON> alpha() )?
+}
+
+void Input():
+{}
+{
+  programm() <EOF>
+}

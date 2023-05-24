@@ -1,0 +1,14 @@
+PROG(in X1, X2; out Y);
+var(H1, H2, H3);
+loop X1
+begin
+	loop X2
+	begin
+		H1 = H1 +1
+	end
+end;
+Y = H1
+
+
+
+
